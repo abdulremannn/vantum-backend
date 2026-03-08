@@ -120,3 +120,6 @@ QUOTE_NOTIFICATION_EMAIL = os.environ.get('QUOTE_NOTIFICATION_EMAIL', 'sales@van
 # Admin interface theme
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-10386.up.railway.app',
+]
