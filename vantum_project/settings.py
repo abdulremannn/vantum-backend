@@ -98,6 +98,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://vantumsurgical.com',
     'https://www.vantumsurgical.com',
     'http://localhost:3000',
+    'https://vantum-surgical.vercel.app',
 ]
 
 # REST Framework
