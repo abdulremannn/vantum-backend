@@ -1,0 +1,51 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Quote Requests{% endblock %}
+{% block topbar %}Quote Requests{% endblock %}
+{% block nav_quotes %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>Quote Requests</h1><p>Manage incoming inquiries from customers</p></div>
+  <a href="/panel/quotes/export/" class="btn btn-outline">↓ Export CSV</a>
+</div>
+
+<div class="filters">
+  <a href="/panel/quotes/" class="btn {% if not status_filter %}btn-primary{% else %}btn-ghost{% endif %} btn-sm">All ({{ counts.new|add:counts.contacted|add:counts.quoted|add:counts.won|add:counts.lost }})</a>
+  <a href="/panel/quotes/?status=new" class="btn {% if status_filter == 'new' %}btn-primary{% else %}btn-ghost{% endif %} btn-sm" style="{% if status_filter != 'new' and counts.new %}color:var(--red){% endif %}">New ({{ counts.new }})</a>
+  <a href="/panel/quotes/?status=contacted" class="btn {% if status_filter == 'contacted' %}btn-primary{% else %}btn-ghost{% endif %} btn-sm">Contacted ({{ counts.contacted }})</a>
+  <a href="/panel/quotes/?status=quoted" class="btn {% if status_filter == 'quoted' %}btn-primary{% else %}btn-ghost{% endif %} btn-sm">Quoted ({{ counts.quoted }})</a>
+  <a href="/panel/quotes/?status=won" class="btn {% if status_filter == 'won' %}btn-primary{% else %}btn-ghost{% endif %} btn-sm">Won ({{ counts.won }})</a>
+  <a href="/panel/quotes/?status=lost" class="btn {% if status_filter == 'lost' %}btn-primary{% else %}btn-ghost{% endif %} btn-sm">Lost ({{ counts.lost }})</a>
+</div>
+
+<div class="card">
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Date</th><th>Name</th><th>Company</th><th>Email</th><th>Country</th><th>Products</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {% for q in quotes %}
+    <tr>
+      <td style="color:var(--faint);white-space:nowrap">{{ q.created_at|date:"M d, Y" }}</td>
+      <td style="font-weight:500;color:var(--text)">{{ q.full_name }}</td>
+      <td>{{ q.company|default:"—" }}</td>
+      <td style="color:var(--faint);font-size:0.8rem">{{ q.email }}</td>
+      <td>{{ q.country|default:"—" }}</td>
+      <td style="max-width:140px">
+        {% for line in q.product_lines %}<span class="badge bb" style="margin:1px">{{ line }}</span>{% endfor %}
+      </td>
+      <td>
+        {% if q.status == 'new' %}<span class="badge br">New</span>
+        {% elif q.status == 'contacted' %}<span class="badge by">Contacted</span>
+        {% elif q.status == 'quoted' %}<span class="badge bb">Quoted</span>
+        {% elif q.status == 'won' %}<span class="badge bg">Won</span>
+        {% else %}<span class="badge bgr">Lost</span>{% endif %}
+      </td>
+      <td><a href="/panel/quotes/{{ q.pk }}/" class="btn btn-ghost btn-sm">View →</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8"><div class="empty"><p>No quote requests yet.</p></div></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

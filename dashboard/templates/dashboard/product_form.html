@@ -1,0 +1,106 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ action }} Product{% endblock %}
+{% block topbar %}{{ action }} Product{% endblock %}
+{% block nav_prods %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>{{ action }} Product</h1><p>{% if product %}Editing {{ product.name }}{% else %}Add a new product to the catalog{% endif %}</p></div>
+  <a href="/panel/products/" class="btn btn-ghost">← Back</a>
+</div>
+<div style="max-width:700px">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Product Info</div>
+    <div class="form-grid">
+      <div class="fg full">
+        <label class="req">Product Name</label>
+        <input type="text" name="name" value="{{ product.name|default:'' }}" required placeholder="e.g. Mayo Scissors Curved">
+      </div>
+      <div class="fg">
+        <label>SKU / Item Code</label>
+        <input type="text" name="sku" value="{{ product.sku|default:'' }}" placeholder="e.g. VS-SS-001">
+      </div>
+      <div class="fg">
+        <label class="req">Category</label>
+        <select name="category" id="cat-sel" required>
+          <option value="">— Select Category —</option>
+          {% for cat in categories %}
+          <option value="{{ cat.pk }}" {% if product.category_id == cat.pk %}selected{% endif %}>{{ cat.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="fg full">
+        <label>Subcategory</label>
+        <select name="subcategory" id="sub-sel">
+          <option value="">— None —</option>
+          {% for sub in subcategories %}
+          <option value="{{ sub.pk }}" {% if product.subcategory_id == sub.pk %}selected{% endif %}>{{ sub.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="fg full">
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="Product details, dimensions, specifications...">{{ product.description|default:'' }}</textarea>
+      </div>
+      <div class="fg">
+        <label>Steel Grade</label>
+        <select name="grade">
+          <option value="316L" {% if product.grade == '316L' %}selected{% endif %}>Grade 316L SS</option>
+          <option value="304" {% if product.grade == '304' %}selected{% endif %}>Grade 304 SS</option>
+          <option value="titanium" {% if product.grade == 'titanium' %}selected{% endif %}>Titanium</option>
+          <option value="other" {% if product.grade == 'other' %}selected{% endif %}>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Availability Status</label>
+        <select name="status">
+          <option value="in_stock" {% if product.status == 'in_stock' %}selected{% endif %}>In Stock</option>
+          <option value="made_to_order" {% if product.status == 'made_to_order' %}selected{% endif %}>Made to Order</option>
+          <option value="out_of_stock" {% if product.status == 'out_of_stock' %}selected{% endif %}>Out of Stock</option>
+        </select>
+      </div>
+      <div class="fg full">
+        <div class="check-row">
+          <input type="checkbox" name="is_featured" id="is_featured" {% if product.is_featured %}checked{% endif %}>
+          <label for="is_featured">⭐ Featured product — shown prominently on website</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" name="is_active" id="is_active" {% if product.is_active or not product %}checked{% endif %}>
+          <label for="is_active">Active — visible in catalog</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Product Photo</div>
+    <div class="file-zone">
+      <input type="file" name="image" accept="image/*">
+      <div class="file-zone-text">
+        <strong>Click to upload photo</strong> or drag & drop<br>
+        <span style="font-size:0.75rem">JPG, PNG, WEBP — square photos work best</span>
+      </div>
+    </div>
+    {% if product.image %}
+    <div class="cur-img" style="text-align:center;margin-top:0.75rem">
+      <img src="{{ product.image.url }}" alt="Current photo">
+      <p>Current photo — upload new to replace</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="form-footer">
+  <button type="submit" class="btn btn-primary">{{ action }} Product</button>
+  <a href="/panel/products/" class="btn btn-ghost">Cancel</a>
+  {% if product %}
+  <a href="/panel/products/{{ product.pk }}/delete/" class="btn btn-danger" style="margin-left:auto" onclick="return confirm('Delete this product?')">Delete</a>
+  {% endif %}
+</div>
+</form>
+</div>
+{% endblock %}

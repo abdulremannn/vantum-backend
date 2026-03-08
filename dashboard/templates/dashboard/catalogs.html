@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Catalogs{% endblock %}
+{% block topbar %}Catalogs{% endblock %}
+{% block nav_catalogs %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>Catalogs</h1><p>Manage downloadable PDF catalogs</p></div>
+  <a href="/panel/catalogs/add/" class="btn btn-primary">+ Upload Catalog</a>
+</div>
+<div class="card">
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Cover</th><th>Name</th><th>Category</th><th>Pages</th><th>Products</th><th>Status</th><th>Updated</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for c in catalogs %}
+    <tr>
+      <td>{% if c.cover_image %}<img src="{{ c.cover_image.url }}" class="pimg">{% else %}<div class="pimg-ph">No Cover</div>{% endif %}</td>
+      <td style="font-weight:500;color:var(--text)">{{ c.name }}</td>
+      <td>{{ c.category.name|default:"All Categories" }}</td>
+      <td>{{ c.page_count }}</td>
+      <td>{{ c.product_count }}</td>
+      <td>{% if c.is_active %}<span class="badge bg">Active</span>{% else %}<span class="badge bgr">Hidden</span>{% endif %}</td>
+      <td style="color:var(--faint)">{{ c.updated_at|date:"M d, Y" }}</td>
+      <td>
+        <div style="display:flex;gap:0.375rem">
+          {% if c.pdf_file %}<a href="{{ c.pdf_file.url }}" target="_blank" class="btn btn-outline btn-sm">↓ PDF</a>{% endif %}
+          <a href="/panel/catalogs/{{ c.pk }}/edit/" class="btn btn-ghost btn-sm">Edit</a>
+          <a href="/panel/catalogs/{{ c.pk }}/delete/" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{ c.name }}?')">Del</a>
+        </div>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8"><div class="empty"><p>No catalogs yet. <a href="/panel/catalogs/add/" style="color:var(--navy)">Upload one →</a></p></div></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

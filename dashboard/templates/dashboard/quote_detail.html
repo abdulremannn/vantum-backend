@@ -1,0 +1,68 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Quote — {{ quote.full_name }}{% endblock %}
+{% block topbar %}Quote Request{% endblock %}
+{% block nav_quotes %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>{{ quote.full_name }}</h1><p>Received {{ quote.created_at|date:"F d, Y \a\t g:i A" }}</p></div>
+  <a href="/panel/quotes/" class="btn btn-ghost">← All Quotes</a>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-header"><span class="card-title">Customer Info</span></div>
+      <div class="card-body" style="padding:0.5rem 1.5rem">
+        <div class="dr"><span class="dl">Name</span><span class="dv">{{ quote.full_name }}</span></div>
+        <div class="dr"><span class="dl">Company</span><span class="dv">{{ quote.company|default:"—" }}</span></div>
+        <div class="dr"><span class="dl">Email</span><span class="dv"><a href="mailto:{{ quote.email }}" style="color:var(--navy)">{{ quote.email }}</a></span></div>
+        <div class="dr"><span class="dl">Phone</span><span class="dv">{% if quote.phone %}<a href="tel:{{ quote.phone }}" style="color:var(--navy)">{{ quote.phone }}</a>{% else %}—{% endif %}</span></div>
+        <div class="dr"><span class="dl">Country</span><span class="dv">{{ quote.country|default:"—" }}</span></div>
+        <div class="dr"><span class="dl">Products</span><span class="dv">{% for l in quote.product_lines %}<span class="badge bb" style="margin:2px">{{ l }}</span>{% endfor %}</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-title">Message</span></div>
+      <div class="card-body">
+        {% if quote.message %}
+        <p style="font-size:0.875rem;color:var(--mid);line-height:1.6;white-space:pre-wrap">{{ quote.message }}</p>
+        {% else %}
+        <p style="color:var(--faint);font-size:0.875rem">No message provided.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Update Status</span></div>
+      <div class="card-body">
+        <form method="post" action="/panel/quotes/{{ quote.pk }}/status/">
+          {% csrf_token %}
+          <div class="fg" style="margin-bottom:1rem">
+            <label>Status</label>
+            <select name="status">
+              <option value="new" {% if quote.status == 'new' %}selected{% endif %}>🔴 New</option>
+              <option value="contacted" {% if quote.status == 'contacted' %}selected{% endif %}>🟡 Contacted</option>
+              <option value="quoted" {% if quote.status == 'quoted' %}selected{% endif %}>🔵 Quoted</option>
+              <option value="won" {% if quote.status == 'won' %}selected{% endif %}>🟢 Won</option>
+              <option value="lost" {% if quote.status == 'lost' %}selected{% endif %}>⚫ Lost</option>
+            </select>
+          </div>
+          <div class="fg" style="margin-bottom:1rem">
+            <label>Internal Notes</label>
+            <textarea name="notes" rows="5" placeholder="Notes visible only to you...">{{ quote.notes }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Save Update</button>
+        </form>
+
+        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.5rem">
+          <a href="mailto:{{ quote.email }}?subject=Re: Your Quote Request — Vantum Surgical" class="btn btn-outline" style="justify-content:center">✉ Reply via Email</a>
+          {% if quote.phone %}<a href="https://wa.me/{{ quote.phone|cut:'+' }}" target="_blank" class="btn btn-outline" style="justify-content:center">💬 WhatsApp</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

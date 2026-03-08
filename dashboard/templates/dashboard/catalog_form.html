@@ -1,0 +1,74 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ action }} Catalog{% endblock %}
+{% block topbar %}{{ action }} Catalog{% endblock %}
+{% block nav_catalogs %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>{{ action }} Catalog</h1></div>
+  <a href="/panel/catalogs/" class="btn btn-ghost">← Back</a>
+</div>
+<div style="max-width:700px">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Catalog Info</div>
+    <div class="form-grid">
+      <div class="fg full">
+        <label class="req">Catalog Name</label>
+        <input type="text" name="name" value="{{ catalog.name|default:'' }}" required placeholder="e.g. Surgical Instruments Catalog 2025">
+      </div>
+      <div class="fg">
+        <label>Category (optional)</label>
+        <select name="category">
+          <option value="">All Categories</option>
+          {% for cat in categories %}<option value="{{ cat.pk }}" {% if catalog.category_id == cat.pk %}selected{% endif %}>{{ cat.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="fg">
+        <label>Number of Pages</label>
+        <input type="number" name="page_count" value="{{ catalog.page_count|default:'0' }}" min="0">
+      </div>
+      <div class="fg">
+        <label>Product Count</label>
+        <input type="number" name="product_count" value="{{ catalog.product_count|default:'0' }}" min="0">
+      </div>
+      <div class="fg full">
+        <div class="check-row">
+          <input type="checkbox" name="is_active" id="is_active" {% if catalog.is_active or not catalog %}checked{% endif %}>
+          <label for="is_active">Active — available for download on website</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Cover Image</div>
+    <div class="file-zone">
+      <input type="file" name="cover_image" accept="image/*">
+      <div class="file-zone-text"><strong>Upload cover image</strong><br><span style="font-size:0.75rem">JPG, PNG — portrait orientation recommended</span></div>
+    </div>
+    {% if catalog.cover_image %}<div class="cur-img" style="text-align:center"><img src="{{ catalog.cover_image.url }}"><p>Current cover</p></div>{% endif %}
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">PDF File</div>
+    <div class="file-zone">
+      <input type="file" name="pdf_file" accept=".pdf">
+      <div class="file-zone-text"><strong>Upload PDF catalog</strong><br><span style="font-size:0.75rem">PDF format only</span></div>
+    </div>
+    {% if catalog.pdf_file %}<p style="margin-top:0.75rem;font-size:0.8rem;color:var(--faint)">Current file: <a href="{{ catalog.pdf_file.url }}" target="_blank" style="color:var(--navy)">View PDF →</a></p>{% endif %}
+  </div>
+</div>
+
+<div class="form-footer">
+  <button type="submit" class="btn btn-primary">{{ action }} Catalog</button>
+  <a href="/panel/catalogs/" class="btn btn-ghost">Cancel</a>
+</div>
+</form>
+</div>
+{% endblock %}

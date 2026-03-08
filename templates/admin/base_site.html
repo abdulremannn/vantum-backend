@@ -1,0 +1,197 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Vantum Surgical{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}" style="display:flex;flex-direction:column;gap:3px;text-decoration:none;padding:0 1.5rem;">
+    <svg width="100" height="22" viewBox="0 0 792 174" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M144.723 0C141.658 33.8197 135.527 64.7803 126.33 92.8817C117.134 120.983 104.63 147.206 88.8185 171.549H56.1468C40.4967 147.532 28.0734 121.555 18.877 93.6169C9.68049 65.5155 3.38817 34.3099 0 0H38.2379C41.1421 27.7746 45.4983 52.9352 51.3066 75.4817C57.1149 98.0282 64.1332 117.062 72.3616 132.583C80.5901 117.062 87.6084 98.0282 93.4167 75.4817C99.225 52.9352 103.581 27.7746 106.485 0H144.723Z" fill="white"/>
+      <path d="M252.587 120.82C252.587 134.217 253.071 143.856 254.039 149.738C255.168 155.62 257.347 160.685 260.573 164.932C257.185 167.383 252.829 169.425 247.505 171.059C242.18 172.53 237.34 173.265 232.984 173.265C228.95 173.265 225.724 171.794 223.304 168.854C220.883 165.913 219.109 161.256 217.979 154.884C213.623 161.746 208.46 166.648 202.49 169.589C196.521 172.53 188.776 174 179.257 174C167.479 174 157.96 170.814 150.7 164.442C143.439 157.907 139.809 149.411 139.809 138.955C139.809 124.251 145.86 113.304 157.96 106.115C170.222 98.7634 189.825 94.3521 216.769 92.8817V80.138C216.769 73.4394 214.994 68.4563 211.445 65.1887C208.057 61.9211 202.813 60.2873 195.714 60.2873C190.551 60.2873 185.388 61.3493 180.225 63.4732C175.224 65.4338 169.012 68.9465 161.59 74.0113C158.202 74.9915 155.298 73.031 148.764 69.1099C145.537 65.1887 142.633 60.0423 140.051 53.6704C146.344 48.1155 155.137 43.5408 166.431 39.9465C177.886 36.1887 189.18 34.3099 200.312 34.3099C217.092 34.3099 229.999 38.3127 239.034 46.3183C248.069 54.1606 252.587 65.4338 252.587 80.138V120.82ZM191.842 150.473C196.682 150.473 201.119 148.758 205.153 145.327C209.347 141.896 213.22 136.586 216.769 129.397V111.262C203.378 111.752 193.213 114.039 186.276 118.124C179.499 122.045 176.111 127.682 176.111 135.034C176.111 139.772 177.563 143.53 180.467 146.307C183.371 149.084 187.163 150.473 191.842 150.473Z" fill="white"/>
+      <path d="M379.004 137.73C379.004 145.899 379.327 152.025 379.972 156.11C380.618 160.194 381.828 163.952 383.603 167.383C374.083 170.977 364.242 172.775 354.077 172.775C350.044 172.775 347.22 170.814 345.607 166.893C343.993 162.972 343.187 156.192 343.187 146.552V82.5887C343.187 74.093 341.896 68.2113 339.314 64.9437C336.894 61.5127 332.538 59.7972 326.246 59.7972C317.856 59.7972 308.659 63.9634 298.656 72.2958V171.549H262.838V80.8732C262.838 69.9268 262.596 61.5127 262.112 55.631C261.79 49.7493 261.064 45.0113 259.934 41.4169C271.874 37.6592 281.635 35.7803 289.218 35.7803C292.606 35.7803 295.026 36.9239 296.478 39.2113C297.93 41.3352 298.656 44.9296 298.656 49.9944V52.9352C306.885 45.9099 313.822 41.0901 319.469 38.4761C325.278 35.6986 331.328 34.3099 337.62 34.3099C351.496 34.3099 361.821 38.1493 368.598 45.8282C375.535 53.3437 379.004 64.862 379.004 80.3831V137.73Z" fill="white"/>
+      <path d="M466.698 147.777C468.473 148.268 469.844 149.33 470.812 150.963C471.78 152.597 472.264 154.558 472.264 156.845C472.264 160.276 471.215 163.054 469.118 165.177C466.536 167.792 462.261 169.915 456.291 171.549C450.483 173.183 444.029 174 436.93 174C425.798 174 416.843 170.896 410.067 164.687C403.291 158.316 399.902 149.901 399.902 139.445V59.7972H379.573V36.7606H399.902V0H435.72V36.7606H460.89V59.7972H435.72V136.259C435.72 141.977 436.608 146.062 438.382 148.513C440.318 150.8 443.626 151.944 448.305 151.944C453.468 151.944 459.599 150.555 466.698 147.777Z" fill="white"/>
+      <path d="M590.19 138.955C590.19 146.47 590.432 152.352 590.916 156.6C591.562 160.848 592.53 164.442 593.82 167.383C590.594 169.017 586.721 170.324 582.204 171.304C577.686 172.285 573.411 172.775 569.377 172.775C564.698 172.775 561.229 171.631 558.971 169.344C556.712 167.056 555.26 163.217 554.614 157.825C549.936 163.054 544.208 167.056 537.432 169.834C530.817 172.611 523.556 174 515.65 174C501.614 174 490.885 170.161 483.463 162.482C476.041 154.639 472.33 143.366 472.33 128.662V36.7606H508.148V126.946C508.148 135.606 509.439 141.814 512.02 145.572C514.763 149.166 519.361 150.963 525.815 150.963C537.27 150.963 546.709 145.082 554.13 133.318V36.7606H590.19V138.955Z" fill="white"/>
+      <path d="M750.858 34.3099C763.604 34.3099 773.607 38.1493 780.867 45.8282C788.289 53.3437 792 63.8 792 77.1972V171.549H755.94V77.9324C755.94 69.9268 754.811 64.5352 752.552 61.7578C750.455 58.8169 746.34 57.3465 740.209 57.3465C731.013 57.3465 723.269 61.431 716.976 69.6V171.549H681.158V75.4817C681.158 68.6197 680.19 63.8817 678.254 61.2676C676.48 58.6535 673.091 57.3465 668.09 57.3465C659.377 57.3465 650.584 62.6563 641.71 73.2761V171.549H605.893V85.0394C605.893 61.8394 604.925 47.5437 602.989 42.1521C606.054 40.3549 609.926 38.8845 614.605 37.7409C619.284 36.4338 623.56 35.7803 627.432 35.7803C631.788 35.7803 635.015 37.0873 637.112 39.7014C639.371 42.1521 640.823 46.4 641.468 52.4451C647.277 46.0732 653.327 41.4986 659.619 38.7211C665.912 35.7803 672.93 34.3099 680.674 34.3099C688.096 34.3099 694.55 35.862 700.035 38.9662C705.521 41.9071 709.716 46.2366 712.62 51.9549C721.655 40.1916 734.401 34.3099 750.858 34.3099Z" fill="white"/>
+    </svg>
+    <span style="font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);font-family:sans-serif;font-weight:400;">Admin Panel</span>
+  </a>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block dark-mode-vars %}{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/admin/css/custom.css">
+<style>
+  /* ── RESET DARK MODE VARIABLES ── */
+  :root, html[data-theme="dark"], html[data-theme="light"] {
+    --primary: #1a3a5c !important;
+    --secondary: #1a3a5c !important;
+    --accent: #1a3a5c !important;
+    --primary-fg: #fff !important;
+    --body-fg: #374151 !important;
+    --body-bg: #f4f6f9 !important;
+    --body-loud-color: #111827 !important;
+    --body-quiet-color: #6b7280 !important;
+    --header-color: #fff !important;
+    --header-branding-color: #fff !important;
+    --header-bg: #1a3a5c !important;
+    --header-link-color: #fff !important;
+    --breadcrumbs-fg: #6b7280 !important;
+    --breadcrumbs-link-fg: #1a3a5c !important;
+    --breadcrumbs-bg: #fff !important;
+    --link-fg: #1a3a5c !important;
+    --link-hover-color: #0f2438 !important;
+    --link-selected-fg: #1a3a5c !important;
+    --hairline-color: #e5e7eb !important;
+    --border-color: #e5e7eb !important;
+    --darken-links: 0 !important;
+    --selected-bg: #eef2f7 !important;
+    --selected-row: #eef2f7 !important;
+    --button-bg: #1a3a5c !important;
+    --button-fg: #fff !important;
+    --default-button-bg: #1a3a5c !important;
+    --default-button-fg: #fff !important;
+    --close-button-bg: #1a3a5c !important;
+    --close-button-hover-bg: #0f2438 !important;
+    --delete-button-bg: #dc2626 !important;
+    --delete-button-fg: #fff !important;
+    --object-tools-fg: #1a3a5c !important;
+    --object-tools-bg: transparent !important;
+    --object-tools-hover-bg: #1a3a5c !important;
+    --sidebar-bg: #f4f6f9 !important;
+    --module-bg: #fff !important;
+    --content-bg: #f4f6f9 !important;
+    --darkened-bg: #f9fafb !important;
+    --nav-sidebar-width: 220px !important;
+    color-scheme: light !important;
+  }
+
+  body, * { font-family: 'Inter', -apple-system, sans-serif !important; }
+  html, body { background: #f4f6f9 !important; color: #374151 !important; }
+
+  /* HEADER */
+  #header {
+    background: #1a3a5c !important;
+    color: #fff !important;
+    height: 60px !important;
+    line-height: 60px !important;
+    padding: 0 !important;
+  }
+  #branding h1 { margin: 0 !important; padding: 0 !important; line-height: 60px !important; }
+  #user-tools { color: rgba(255,255,255,0.65) !important; font-size: 0.8rem !important; padding-right: 1.5rem !important; }
+  #user-tools a { color: rgba(255,255,255,0.85) !important; border-bottom: none !important; }
+  #user-tools a:hover { color: #fff !important; }
+  #user-tools strong { color: #fff !important; }
+
+  /* BREADCRUMBS */
+  div.breadcrumbs {
+    background: #fff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    color: #6b7280 !important;
+    padding: 10px 24px !important;
+    font-size: 0.8rem !important;
+  }
+  div.breadcrumbs a { color: #1a3a5c !important; }
+
+  /* CONTENT */
+  #content { padding: 24px !important; background: #f4f6f9 !important; }
+  #content h1 { font-size: 1.375rem !important; font-weight: 600 !important; color: #111827 !important; margin-bottom: 20px !important; }
+
+  /* MODULES */
+  .module {
+    background: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+    overflow: hidden !important;
+    margin-bottom: 16px !important;
+  }
+  .module caption, .module > h2, .module table caption {
+    background: #1a3a5c !important;
+    color: #fff !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    padding: 10px 16px !important;
+    border-radius: 0 !important;
+    text-align: left !important;
+  }
+  .module table { width: 100% !important; border-collapse: collapse !important; }
+  .module td, .module th { padding: 10px 16px !important; font-size: 0.875rem !important; border: none !important; border-bottom: 1px solid #f3f4f6 !important; background: #fff !important; color: #374151 !important; }
+  .module tr:last-child td { border-bottom: none !important; }
+  .module tbody tr:hover td { background: #eef2f7 !important; }
+  .module td a { color: #1a3a5c !important; }
+
+  /* LINKS */
+  a:link, a:visited { color: #1a3a5c !important; }
+  a:hover { color: #0f2438 !important; }
+
+  /* BUTTONS */
+  .button, input[type="submit"], input[type="button"], .submit-row input, a.button {
+    background: #1a3a5c !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 8px 18px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+  }
+  .button:hover, input[type="submit"]:hover { background: #122840 !important; }
+  a.deletelink, .deletelink { background: #dc2626 !important; color: #fff !important; border-radius: 5px !important; padding: 8px 18px !important; }
+  a.addlink { color: #1a3a5c !important; font-weight: 500 !important; }
+
+  /* SUBMIT ROW */
+  .submit-row { background: #fff !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 14px 18px !important; margin: 16px 0 !important; }
+
+  /* RESULT TABLE */
+  #result_list { background: #fff !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; overflow: hidden !important; width: 100% !important; border-collapse: collapse !important; }
+  #result_list thead th { background: #f9fafb !important; color: #6b7280 !important; font-size: 0.7rem !important; font-weight: 700 !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; padding: 12px 16px !important; border-bottom: 1px solid #e5e7eb !important; }
+  #result_list thead th a { color: #6b7280 !important; }
+  #result_list tbody td { padding: 12px 16px !important; font-size: 0.875rem !important; color: #374151 !important; background: #fff !important; border-bottom: 1px solid #f3f4f6 !important; }
+  #result_list tbody tr:hover td { background: #eef2f7 !important; }
+  #result_list tbody tr.selected td { background: #dbeafe !important; }
+
+  /* FIELDSETS */
+  fieldset { background: #fff !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 20px !important; margin-bottom: 16px !important; }
+  fieldset h2 { font-size: 0.65rem !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: #6b7280 !important; border-bottom: 1px solid #f3f4f6 !important; padding-bottom: 10px !important; margin-bottom: 14px !important; }
+  .form-row { padding: 10px 0 !important; border-bottom: 1px solid #f9fafb !important; }
+  label { font-size: 0.8125rem !important; font-weight: 500 !important; color: #374151 !important; }
+  input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="url"], textarea, select {
+    border: 1px solid #d1d5db !important; border-radius: 5px !important; padding: 8px 12px !important; font-size: 0.875rem !important; color: #111827 !important; background: #fff !important;
+  }
+  input:focus, textarea:focus, select:focus { border-color: #1a3a5c !important; outline: none !important; box-shadow: 0 0 0 3px rgba(26,58,92,0.1) !important; }
+
+  /* FILTERS */
+  #changelist-filter { background: #fff !important; border-left: 1px solid #e5e7eb !important; }
+  #changelist-filter h2 { background: #1a3a5c !important; color: #fff !important; font-size: 0.65rem !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; padding: 10px 16px !important; margin: 0 !important; }
+  #changelist-filter h3 { color: #374151 !important; font-size: 0.75rem !important; }
+  #changelist-filter li { font-size: 0.8125rem !important; }
+  #changelist-filter li.selected a { color: #1a3a5c !important; font-weight: 600 !important; }
+
+  /* MESSAGES */
+  ul.messagelist li { border-radius: 6px !important; padding: 10px 16px !important; font-size: 0.875rem !important; list-style: none !important; border-left: 3px solid !important; }
+  ul.messagelist li.success { background: #f0fdf4 !important; color: #166534 !important; border-color: #16a34a !important; }
+  ul.messagelist li.warning { background: #fffbeb !important; color: #92400e !important; border-color: #d97706 !important; }
+  ul.messagelist li.error { background: #fef2f2 !important; color: #991b1b !important; border-color: #dc2626 !important; }
+
+  /* OBJECT TOOLS */
+  ul.object-tools a { background: transparent !important; border: 1px solid #1a3a5c !important; color: #1a3a5c !important; border-radius: 5px !important; font-size: 0.75rem !important; }
+  ul.object-tools a:hover { background: #1a3a5c !important; color: #fff !important; }
+
+  /* NAV SIDEBAR */
+  #nav-sidebar { background: #fff !important; border-right: 1px solid #e5e7eb !important; }
+  .toggle-nav-sidebar { border-color: #e5e7eb !important; color: #6b7280 !important; }
+
+  /* INLINE */
+  .inline-group { background: #fff !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; overflow: hidden !important; margin-top: 16px !important; }
+  .inline-group h2 { background: #f9fafb !important; color: #6b7280 !important; font-size: 0.65rem !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; padding: 10px 16px !important; border-bottom: 1px solid #e5e7eb !important; margin: 0 !important; }
+</style>
+{% endblock %}

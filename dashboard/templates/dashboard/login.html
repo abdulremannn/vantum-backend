@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login — Vantum Surgical Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f4f6f9;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;width:100%;max-width:400px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+.login-header{background:#1a3a5c;padding:2rem;text-align:center;}
+.login-header svg{height:24px;width:auto;}
+.login-header p{color:rgba(255,255,255,0.5);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;margin-top:8px;}
+.login-body{padding:2rem;}
+.login-body h2{font-family:'Libre Baskerville',serif;font-size:1.25rem;color:#111827;margin-bottom:0.25rem;}
+.login-body p{font-size:0.875rem;color:#6b7280;margin-bottom:1.5rem;}
+.form-group{margin-bottom:1rem;}
+label{display:block;font-size:0.8125rem;font-weight:500;color:#374151;margin-bottom:0.375rem;}
+input{width:100%;padding:0.625rem 0.875rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.875rem;color:#111827;font-family:'Inter',sans-serif;}
+input:focus{border-color:#1a3a5c;outline:none;box-shadow:0 0 0 3px rgba(26,58,92,0.08);}
+.btn{width:100%;padding:0.75rem;background:#1a3a5c;color:white;border:none;border-radius:6px;font-size:0.875rem;font-weight:600;cursor:pointer;margin-top:0.5rem;}
+.btn:hover{background:#122840;}
+.error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;border-radius:6px;padding:0.75rem;font-size:0.8125rem;margin-bottom:1rem;}
+</style>
+</head>
+<body>
+<div class="login-card">
+  <div class="login-header">
+    <svg viewBox="0 0 792 174" fill="none"><path d="M144.723 0C141.658 33.8197 135.527 64.7803 126.33 92.8817C117.134 120.983 104.63 147.206 88.8185 171.549H56.1468C40.4967 147.532 28.0734 121.555 18.877 93.6169C9.68049 65.5155 3.38817 34.3099 0 0H38.2379C41.1421 27.7746 45.4983 52.9352 51.3066 75.4817C57.1149 98.0282 64.1332 117.062 72.3616 132.583C80.5901 117.062 87.6084 98.0282 93.4167 75.4817C99.225 52.9352 103.581 27.7746 106.485 0H144.723Z" fill="white"/><path d="M252.587 120.82C252.587 134.217 253.071 143.856 254.039 149.738C255.168 155.62 257.347 160.685 260.573 164.932C257.185 167.383 252.829 169.425 247.505 171.059C242.18 172.53 237.34 173.265 232.984 173.265C228.95 173.265 225.724 171.794 223.304 168.854C220.883 165.913 219.109 161.256 217.979 154.884C213.623 161.746 208.46 166.648 202.49 169.589C196.521 172.53 188.776 174 179.257 174C167.479 174 157.96 170.814 150.7 164.442C143.439 157.907 139.809 149.411 139.809 138.955C139.809 124.251 145.86 113.304 157.96 106.115C170.222 98.7634 189.825 94.3521 216.769 92.8817V80.138C216.769 73.4394 214.994 68.4563 211.445 65.1887C208.057 61.9211 202.813 60.2873 195.714 60.2873C190.551 60.2873 185.388 61.3493 180.225 63.4732C175.224 65.4338 169.012 68.9465 161.59 74.0113C158.202 74.9915 155.298 73.031 148.764 69.1099C145.537 65.1887 142.633 60.0423 140.051 53.6704C146.344 48.1155 155.137 43.5408 166.431 39.9465C177.886 36.1887 189.18 34.3099 200.312 34.3099C217.092 34.3099 229.999 38.3127 239.034 46.3183C248.069 54.1606 252.587 65.4338 252.587 80.138V120.82Z" fill="white"/><path d="M466.698 147.777C468.473 148.268 469.844 149.33 470.812 150.963C471.78 152.597 472.264 154.558 472.264 156.845C472.264 160.276 471.215 163.054 469.118 165.177C466.536 167.792 462.261 169.915 456.291 171.549C450.483 173.183 444.029 174 436.93 174C425.798 174 416.843 170.896 410.067 164.687C403.291 158.316 399.902 149.901 399.902 139.445V59.7972H379.573V36.7606H399.902V0H435.72V36.7606H460.89V59.7972H435.72V136.259C435.72 141.977 436.608 146.062 438.382 148.513C440.318 150.8 443.626 151.944 448.305 151.944C453.468 151.944 459.599 150.555 466.698 147.777Z" fill="white"/><path d="M750.858 34.3099C763.604 34.3099 773.607 38.1493 780.867 45.8282C788.289 53.3437 792 63.8 792 77.1972V171.549H755.94V77.9324C755.94 69.9268 754.811 64.5352 752.552 61.7578C750.455 58.8169 746.34 57.3465 740.209 57.3465C731.013 57.3465 723.269 61.431 716.976 69.6V171.549H681.158V75.4817C681.158 68.6197 680.19 63.8817 678.254 61.2676C676.48 58.6535 673.091 57.3465 668.09 57.3465C659.377 57.3465 650.584 62.6563 641.71 73.2761V171.549H605.893V85.0394C605.893 61.8394 604.925 47.5437 602.989 42.1521C606.054 40.3549 609.926 38.8845 614.605 37.7409C619.284 36.4338 623.56 35.7803 627.432 35.7803C631.788 35.7803 635.015 37.0873 637.112 39.7014C639.371 42.1521 640.823 46.4 641.468 52.4451C647.277 46.0732 653.327 41.4986 659.619 38.7211C665.912 35.7803 672.93 34.3099 680.674 34.3099C688.096 34.3099 694.55 35.862 700.035 38.9662C705.521 41.9071 709.716 46.2366 712.62 51.9549C721.655 40.1916 734.401 34.3099 750.858 34.3099Z" fill="white"/></svg>
+    <p>Admin Panel</p>
+  </div>
+  <div class="login-body">
+    <h2>Welcome back</h2>
+    <p>Sign in to manage your catalog</p>
+    {% if messages %}{% for m in messages %}<div class="error">{{ m }}</div>{% endfor %}{% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group"><label>Username</label><input type="text" name="username" autofocus required></div>
+      <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

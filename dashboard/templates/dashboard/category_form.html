@@ -1,0 +1,75 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ action }} Category{% endblock %}
+{% block topbar %}{{ action }} Category{% endblock %}
+{% block nav_cats %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>{{ action }} Category</h1><p>{% if category %}Editing {{ category.name }}{% else %}Add a new product line{% endif %}</p></div>
+  <a href="/panel/categories/" class="btn btn-ghost">← Back</a>
+</div>
+<div style="max-width:700px">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Basic Info</div>
+    <div class="form-grid">
+      <div class="fg">
+        <label class="req">Name</label>
+        <input type="text" name="name" value="{{ category.name|default:'' }}" required placeholder="e.g. Surgical Instruments">
+      </div>
+      <div class="fg">
+        <label class="req">Slug</label>
+        <input type="text" name="slug" value="{{ category.slug|default:'' }}" required placeholder="e.g. surgical">
+        <span class="hint">Used in URLs — lowercase, no spaces</span>
+      </div>
+      <div class="fg full">
+        <label>Description</label>
+        <textarea name="description" rows="3" placeholder="Brief description of this category...">{{ category.description|default:'' }}</textarea>
+      </div>
+      <div class="fg">
+        <label>Display Order</label>
+        <input type="number" name="order" value="{{ category.order|default:'0' }}" min="0">
+        <span class="hint">Lower = appears first</span>
+      </div>
+      <div class="fg">
+        <label>Product Count (display)</label>
+        <input type="number" name="product_count" value="{{ category.product_count|default:'0' }}" min="0">
+        <span class="hint">Number shown on website</span>
+      </div>
+      <div class="fg full">
+        <div class="check-row">
+          <input type="checkbox" name="is_active" id="is_active" {% if category.is_active or not category %}checked{% endif %}>
+          <label for="is_active">Active — visible on website</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="card-body">
+    <div class="sec-title">Hero Image</div>
+    <div class="file-zone">
+      <input type="file" name="hero_image" accept="image/*">
+      <div class="file-zone-text">
+        <strong>Click to upload</strong> or drag & drop<br>
+        <span style="font-size:0.75rem">JPG, PNG, WEBP — recommended 1200×600px</span>
+      </div>
+    </div>
+    {% if category.hero_image %}
+    <div class="cur-img">
+      <img src="{{ category.hero_image.url }}" alt="Current image">
+      <p>Current image — upload new to replace</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="form-footer">
+  <button type="submit" class="btn btn-primary">{{ action }} Category</button>
+  <a href="/panel/categories/" class="btn btn-ghost">Cancel</a>
+</div>
+</form>
+</div>
+{% endblock %}

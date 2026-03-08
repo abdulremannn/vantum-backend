@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Products{% endblock %}
+{% block topbar %}Products{% endblock %}
+{% block nav_prods %}active{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1>Products</h1><p>{{ products|length }} product{{ products|length|pluralize }} found</p></div>
+  <a href="/panel/products/add/" class="btn btn-primary">+ Add Product</a>
+</div>
+<form method="get" class="filters">
+  <input class="sinp" type="text" name="q" value="{{ search|default:'' }}" placeholder="Search products...">
+  <select class="fsel" name="category" onchange="this.form.submit()">
+    <option value="">All Categories</option>
+    {% for cat in categories %}<option value="{{ cat.slug }}" {% if cat_filter == cat.slug %}selected{% endif %}>{{ cat.name }}</option>{% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary">Search</button>
+  {% if search or cat_filter %}<a href="/panel/products/" class="btn btn-ghost">Clear</a>{% endif %}
+</form>
+<div class="card">
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Photo</th><th>Name</th><th>SKU</th><th>Category</th><th>Subcategory</th><th>Grade</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for p in products %}
+    <tr>
+      <td>{% if p.image %}<img src="{{ p.image.url }}" class="pimg">{% else %}<div class="pimg-ph">No Photo</div>{% endif %}</td>
+      <td style="font-weight:500;color:var(--text);max-width:200px">{{ p.name }}</td>
+      <td style="color:var(--faint);font-size:0.8rem;font-family:monospace">{{ p.sku|default:"—" }}</td>
+      <td>{{ p.category.name }}</td>
+      <td style="color:var(--faint)">{{ p.subcategory.name|default:"—" }}</td>
+      <td><span class="badge bgr">{{ p.grade }}</span></td>
+      <td>
+        {% if p.status == 'in_stock' %}<span class="badge bg">In Stock</span>
+        {% elif p.status == 'out_of_stock' %}<span class="badge br">Out of Stock</span>
+        {% else %}<span class="badge by">Made to Order</span>{% endif %}
+      </td>
+      <td>{% if p.is_featured %}<span style="color:var(--yellow)">★</span>{% else %}<span style="color:#d1d5db">☆</span>{% endif %}</td>
+      <td>
+        <div style="display:flex;gap:0.375rem">
+          <a href="/panel/products/{{ p.pk }}/edit/" class="btn btn-ghost btn-sm">Edit</a>
+          <a href="/panel/products/{{ p.pk }}/delete/" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{ p.name }}?')">Del</a>
+        </div>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="9"><div class="empty"><p>No products found. <a href="/panel/products/add/" style="color:var(--navy)">Add one →</a></p></div></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

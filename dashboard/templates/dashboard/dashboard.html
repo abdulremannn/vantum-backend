@@ -1,0 +1,97 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block topbar %}Dashboard{% endblock %}
+{% block nav_dash %}active{% endblock %}
+{% block content %}
+<div class="ph"><div><h1>Good to see you, {{ request.user.first_name|default:request.user.username }}</h1><p>Here's what's happening with Vantum Surgical</p></div></div>
+
+<div class="stats">
+  <div class="stat navy">
+    <div class="stat-label">Total Products</div>
+    <div class="stat-val">{{ total_products }}</div>
+    <div class="stat-sub">Active in catalog</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Categories</div>
+    <div class="stat-val">{{ total_categories }}</div>
+    <div class="stat-sub">Product lines</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Quote Requests</div>
+    <div class="stat-val">{{ total_quotes }}</div>
+    <div class="stat-sub">All time</div>
+  </div>
+  <div class="stat" style="border-color:{% if new_quotes %}#fca5a5{% else %}var(--border){% endif %}">
+    <div class="stat-label">New Quotes</div>
+    <div class="stat-val" style="color:{% if new_quotes %}var(--red){% else %}var(--text){% endif %}">{{ new_quotes }}</div>
+    <div class="stat-sub">Awaiting response</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Recent Quote Requests</span>
+      <a href="/panel/quotes/" class="btn btn-outline btn-sm">View All</a>
+    </div>
+    {% if recent_quotes %}
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>Company</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for q in recent_quotes %}
+        <tr>
+          <td><a href="/panel/quotes/{{ q.pk }}/" style="color:var(--navy);font-weight:500">{{ q.full_name }}</a></td>
+          <td>{{ q.company|default:"—" }}</td>
+          <td style="color:var(--faint)">{{ q.created_at|date:"M d, Y" }}</td>
+          <td>
+            {% if q.status == 'new' %}<span class="badge br">New</span>
+            {% elif q.status == 'contacted' %}<span class="badge by">Contacted</span>
+            {% elif q.status == 'quoted' %}<span class="badge bb">Quoted</span>
+            {% elif q.status == 'won' %}<span class="badge bg">Won</span>
+            {% else %}<span class="badge bgr">{{ q.get_status_display }}</span>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty"><p>No quote requests yet.</p></div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Products by Category</span>
+      <a href="/panel/products/" class="btn btn-outline btn-sm">Manage</a>
+    </div>
+    <div class="card-body" style="padding:1rem 1.5rem">
+      {% for cat in products_by_category %}
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0.625rem 0;border-bottom:1px solid #f3f4f6">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--navy);flex-shrink:0"></div>
+          <span style="font-size:0.875rem;color:var(--mid)">{{ cat.name }}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <div style="background:var(--bg);border-radius:4px;height:6px;width:80px;overflow:hidden">
+            <div style="background:var(--navy);height:100%;width:{% widthratio cat.count total_products 100 %}%"></div>
+          </div>
+          <span style="font-size:0.8125rem;font-weight:600;color:var(--text);min-width:24px;text-align:right">{{ cat.count }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:0">
+  <div class="card-header"><span class="card-title">Quick Actions</span></div>
+  <div class="card-body" style="display:flex;gap:0.75rem;flex-wrap:wrap">
+    <a href="/panel/products/add/" class="btn btn-primary">+ Add Product</a>
+    <a href="/panel/categories/add/" class="btn btn-outline">+ Add Category</a>
+    <a href="/panel/catalogs/add/" class="btn btn-outline">+ Upload Catalog</a>
+    <a href="/panel/quotes/export/" class="btn btn-ghost">↓ Export Quotes CSV</a>
+  </div>
+</div>
+{% endblock %}
