@@ -127,11 +127,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://web-production-10386.up.railway.app',
 ]
 # Cloudinary
-import cloudinary
-cloudinary.config(
-    cloud_name = 'dsn7lwzh0',
-    api_key = '534567526791963',
-    api_secret = 'Mme-ptMVNB8gMvyBypCIT2W0i-c',
-)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dsn7lwzh0',
+    'API_KEY': '534567526791963',
+    'API_SECRET': 'Mme-ptMVNB8gMvyBypCIT2W0i-c',
+}
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
