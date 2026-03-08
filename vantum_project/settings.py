@@ -126,11 +126,17 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-10386.up.railway.app',
 ]
-# Cloudinary
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dsn7lwzh0',
     'API_KEY': '534567526791963',
     'API_SECRET': 'Mme-ptMVNB8gMvyBypCIT2W0i-c',
+    'MEDIA_TAG': 'media',
+    'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
+    'EXCLUDE_DELETE_ORPHANED_MEDIA_PATHS': ('',),
+    'STATIC_TAG': 'static',
+    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'manifest'),
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'jpe', 'mpo', 'png', 'gif', 'svg', 'bmp', 'ico', 'webp'],
+    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'webm', 'flv', 'mov', 'v_codec', 'avi', 'wmv', 'mpeg', 'flv', '3gp', '3g2'],
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
