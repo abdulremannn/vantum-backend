@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'products',
     'quotes',
     'dashboard',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,12 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-10386.up.railway.app',
 ]
+# Cloudinary
+import cloudinary
+cloudinary.config(
+    cloud_name = 'dsn7lwzh0',
+    api_key = '534567526791963',
+    api_secret = 'Mme-ptMVNB8gMvyBypCIT2W0i-c',
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
