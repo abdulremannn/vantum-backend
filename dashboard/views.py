@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.db.models import Count
 from django.utils import timezone
 import csv
+import cloudinary.uploader
 from products.models import Category, Product, Subcategory, Catalog
 from quotes.models import QuoteRequest
 
@@ -58,7 +59,6 @@ def category_add(request):
         if 'hero_image' in request.FILES:
             cat.hero_image = request.FILES['hero_image']
         cat.save()
-        # Save subcategories
         subs = request.POST.getlist('subcategories')
         for sub in subs:
             if sub.strip():
@@ -221,7 +221,12 @@ def catalog_add(request):
         if 'cover_image' in request.FILES:
             c.cover_image = request.FILES['cover_image']
         if 'pdf_file' in request.FILES:
-            c.pdf_file = request.FILES['pdf_file']
+            result = cloudinary.uploader.upload(
+                request.FILES['pdf_file'],
+                resource_type='raw',
+                folder='catalogs/pdfs',
+            )
+            c.pdf_file = result['secure_url']
         c.save()
         messages.success(request, f'Catalog "{c.name}" added.')
         return redirect('catalogs')
@@ -242,7 +247,12 @@ def catalog_edit(request, pk):
         if 'cover_image' in request.FILES:
             c.cover_image = request.FILES['cover_image']
         if 'pdf_file' in request.FILES:
-            c.pdf_file = request.FILES['pdf_file']
+            result = cloudinary.uploader.upload(
+                request.FILES['pdf_file'],
+                resource_type='raw',
+                folder='catalogs/pdfs',
+            )
+            c.pdf_file = result['secure_url']
         c.save()
         messages.success(request, f'Catalog "{c.name}" updated.')
         return redirect('catalogs')
@@ -259,3 +269,4 @@ def catalog_delete(request, pk):
 def get_subcategories(request, category_id):
     subs = Subcategory.objects.filter(category_id=category_id).values('id', 'name')
     return JsonResponse(list(subs), safe=False)
+
