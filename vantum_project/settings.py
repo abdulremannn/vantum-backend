@@ -140,3 +140,11 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
+import cloudinary
+cloudinary.config(
+    cloud_name='dsn7lwzh0',
+    api_key='534567526791963',
+    api_secret='Mme-ptMVNB8gMvyBypCIT2W0i-c',
+    secure=True
+)
