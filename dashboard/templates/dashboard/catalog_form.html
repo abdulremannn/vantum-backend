@@ -45,12 +45,13 @@
 
 <div class="card" style="margin-bottom:1.25rem">
   <div class="card-body">
-    <div class="sec-title">Cover Image</div>
-    <div class="file-zone">
-      <input type="file" name="cover_image" accept="image/*">
-      <div class="file-zone-text"><strong>Upload cover image</strong><br><span style="font-size:0.75rem">JPG, PNG — portrait orientation recommended</span></div>
+    <div class="sec-title">PDF File</div>
+    <div class="fg full">
+      <label>Paste Cloudinary PDF URL</label>
+      <input type="text" name="pdf_url" value="{{ catalog.pdf_file|default:'' }}" placeholder="https://res.cloudinary.com/dsn7lwzh0/raw/upload/...">
+      <small style="color:var(--faint)">Upload PDF to Cloudinary → Media Library → click file → copy URL → paste here</small>
     </div>
-    {% if catalog.cover_image %}<div class="cur-img" style="text-align:center"><img src="{{ catalog.cover_image.url }}"><p>Current cover</p></div>{% endif %}
+    {% if catalog.pdf_file %}<p style="margin-top:0.75rem;font-size:0.8rem;color:var(--faint)">Current: <a href="{{ catalog.pdf_file }}" target="_blank" style="color:var(--navy)">View PDF →</a></p>{% endif %}
   </div>
 </div>
 

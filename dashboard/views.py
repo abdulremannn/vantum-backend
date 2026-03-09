@@ -220,17 +220,9 @@ def catalog_add(request):
         )
         if 'cover_image' in request.FILES:
             c.cover_image = request.FILES['cover_image']
-        if 'pdf_file' in request.FILES:
-            try:
-                result = cloudinary.uploader.upload(
-                    request.FILES['pdf_file'],
-                    resource_type='raw',
-                    folder='catalogs/pdfs',
-                )
-                c.pdf_file = result['secure_url']
-                print('PDF URL saved:', c.pdf_file)
-            except Exception as e:
-                print('Cloudinary upload error:', e)
+        pdf_url = request.POST.get('pdf_url', '').strip()
+        if pdf_url:
+            c.pdf_file = pdf_url
         c.save()
         messages.success(request, f'Catalog "{c.name}" added.')
         return redirect('catalogs')
@@ -250,13 +242,9 @@ def catalog_edit(request, pk):
         c.is_active = request.POST.get('is_active') == 'on'
         if 'cover_image' in request.FILES:
             c.cover_image = request.FILES['cover_image']
-        if 'pdf_file' in request.FILES:
-            result = cloudinary.uploader.upload(
-                request.FILES['pdf_file'],
-                resource_type='raw',
-                folder='catalogs/pdfs',
-            )
-            c.pdf_file = result['secure_url'].replace('/image/upload/', '/raw/upload/')
+        pdf_url = request.POST.get('pdf_url', '').strip()
+        if pdf_url:
+            c.pdf_file = pdf_url
         c.save()
         messages.success(request, f'Catalog "{c.name}" updated.')
         return redirect('catalogs')
