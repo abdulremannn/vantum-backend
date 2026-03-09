@@ -112,15 +112,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 24,
 }
 
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER', 'noreply@vantumsurgical.com')
-QUOTE_NOTIFICATION_EMAIL = os.environ.get('QUOTE_NOTIFICATION_EMAIL', 'sales@vantumsurgical.com')
+# Email - Console backend (quotes save to database, check admin panel)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@vantumsurgical.com'
+QUOTE_NOTIFICATION_EMAIL = 'sales@vantumsurgical.com'
 
 # Admin interface theme
 X_FRAME_OPTIONS = 'SAMEORIGIN'
