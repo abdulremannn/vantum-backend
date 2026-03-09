@@ -102,6 +102,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://vantum-surgical.vercel.app',
 ]
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = ['*']
 
 # REST Framework
 REST_FRAMEWORK = {
