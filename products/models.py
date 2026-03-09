@@ -1,14 +1,7 @@
-from cloudinary_storage.storage import RawMediaCloudinaryStorage
+from cloudinary.models import CloudinaryField
 from django.db import models
 
 class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ('surgical', 'Surgical Instruments'),
-        ('dental', 'Dental Instruments'),
-        ('holloware', 'Holloware'),
-        ('furniture', 'Hospital Furniture'),
-        ('beauty', 'Beauty Instruments'),
-    ]
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -74,7 +67,7 @@ class Catalog(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     cover_image = models.ImageField(upload_to='catalogs/covers/')
-    pdf_file = models.FileField(upload_to='catalogs/pdfs/', blank=True, null=True, storage=RawMediaCloudinaryStorage())
+    pdf_file = CloudinaryField('pdf', resource_type='raw', blank=True, null=True)
     page_count = models.PositiveIntegerField(default=0)
     product_count = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
