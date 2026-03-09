@@ -1,4 +1,3 @@
-from cloudinary.models import CloudinaryField
 from django.db import models
 
 class Category(models.Model):
@@ -67,7 +66,7 @@ class Catalog(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     cover_image = models.ImageField(upload_to='catalogs/covers/')
-    pdf_file = CloudinaryField('pdf', resource_type='raw', blank=True, null=True)
+    pdf_file = models.URLField(max_length=500, blank=True, null=True)
     page_count = models.PositiveIntegerField(default=0)
     product_count = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
