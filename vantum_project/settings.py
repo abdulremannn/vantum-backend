@@ -83,10 +83,10 @@ TIME_ZONE = 'America/New_York'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files - FIXED: Removed "Manifest" to prevent collectstatic errors
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files (product photos)
 MEDIA_URL = '/media/'
@@ -138,8 +138,6 @@ CLOUDINARY_STORAGE = {
     'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'jpe', 'mpo', 'png', 'gif', 'svg', 'bmp', 'ico', 'webp'],
     'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'webm', 'flv', 'mov', 'v_codec', 'avi', 'wmv', 'mpeg', 'flv', '3gp', '3g2'],
 }
-
-
 
 import cloudinary
 cloudinary.config(
