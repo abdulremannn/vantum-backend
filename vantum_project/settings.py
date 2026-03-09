@@ -122,6 +122,8 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-10386.up.railway.app',
+    'https://vantumsurgical.com',
+    'https://www.vantumsurgical.com',
 ]
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dsn7lwzh0',
