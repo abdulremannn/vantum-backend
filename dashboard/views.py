@@ -221,12 +221,16 @@ def catalog_add(request):
         if 'cover_image' in request.FILES:
             c.cover_image = request.FILES['cover_image']
         if 'pdf_file' in request.FILES:
-            result = cloudinary.uploader.upload(
-                request.FILES['pdf_file'],
-                resource_type='raw',
-                folder='catalogs/pdfs',
-            )
-            c.pdf_file = result['secure_url'].replace('/image/upload/', '/raw/upload/')
+            try:
+                result = cloudinary.uploader.upload(
+                    request.FILES['pdf_file'],
+                    resource_type='raw',
+                    folder='catalogs/pdfs',
+                )
+                c.pdf_file = result['secure_url']
+                print('PDF URL saved:', c.pdf_file)
+            except Exception as e:
+                print('Cloudinary upload error:', e)
         c.save()
         messages.success(request, f'Catalog "{c.name}" added.')
         return redirect('catalogs')
