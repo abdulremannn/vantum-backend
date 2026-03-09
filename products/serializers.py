@@ -57,5 +57,7 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     def get_pdf_url(self, obj):
         if obj.pdf_file:
-            return obj.pdf_file
+            if str(obj.pdf_file).startswith('http'):
+                return str(obj.pdf_file)
+            return f'https://res.cloudinary.com/dsn7lwzh0/raw/upload/{obj.pdf_file}'
         return None
