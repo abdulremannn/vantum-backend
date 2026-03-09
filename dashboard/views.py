@@ -226,7 +226,7 @@ def catalog_add(request):
                 resource_type='raw',
                 folder='catalogs/pdfs',
             )
-            c.pdf_file = result['secure_url']
+            c.pdf_file = result['secure_url'].replace('/image/upload/', '/raw/upload/')
         c.save()
         messages.success(request, f'Catalog "{c.name}" added.')
         return redirect('catalogs')
@@ -252,7 +252,7 @@ def catalog_edit(request, pk):
                 resource_type='raw',
                 folder='catalogs/pdfs',
             )
-            c.pdf_file = result['secure_url']
+            c.pdf_file = result['secure_url'].replace('/image/upload/', '/raw/upload/')
         c.save()
         messages.success(request, f'Catalog "{c.name}" updated.')
         return redirect('catalogs')
