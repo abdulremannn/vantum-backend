@@ -139,7 +139,7 @@ CLOUDINARY_STORAGE = {
     'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'webm', 'flv', 'mov', 'v_codec', 'avi', 'wmv', 'mpeg', 'flv', '3gp', '3g2'],
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
 
 import cloudinary
 cloudinary.config(

@@ -1,10 +1,11 @@
 from django.db import models
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     description = models.TextField()
-    hero_image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    hero_image = models.ImageField(upload_to='categories/', blank=True, null=True, storage=MediaCloudinaryStorage())
     product_count = models.PositiveIntegerField(default=0)
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
@@ -50,7 +51,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     grade = models.CharField(max_length=20, choices=GRADE_CHOICES, default='316L')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_stock')
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.ImageField(upload_to='products/', blank=True, null=True, storage=MediaCloudinaryStorage())
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -65,7 +66,7 @@ class Product(models.Model):
 class Catalog(models.Model):
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    cover_image = models.ImageField(upload_to='catalogs/covers/')
+    cover_image = models.ImageField(upload_to='catalogs/covers/', storage=MediaCloudinaryStorage())
     pdf_file = models.URLField(max_length=500, blank=True, null=True)
     page_count = models.PositiveIntegerField(default=0)
     product_count = models.PositiveIntegerField(default=0)
@@ -74,3 +75,4 @@ class Catalog(models.Model):
 
     def __str__(self):
         return self.name
+    
