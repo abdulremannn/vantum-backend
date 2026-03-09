@@ -86,7 +86,7 @@ USE_TZ = True
 # Static files - FIXED: Removed "Manifest" to prevent collectstatic errors
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files (product photos)
 MEDIA_URL = '/media/'
