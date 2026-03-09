@@ -56,7 +56,6 @@ class CatalogSerializer(serializers.ModelSerializer):
         return None
 
     def get_pdf_url(self, obj):
-        request = self.context.get('request')
-        if obj.pdf_file and request:
-            return request.build_absolute_uri(obj.pdf_file.url)
+        if obj.pdf_file:
+            return obj.pdf_file
         return None
